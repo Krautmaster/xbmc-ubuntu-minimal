@@ -899,29 +899,8 @@ function cleanUp()
 
 function rebootMachine()
 {
-    showInfo "Reboot system..."
-	dialog --title "Installation complete" \
-		--backtitle "$SCRIPT_TITLE" \
-		--yesno "Do you want to reboot now?" 7 $DIALOG_WIDTH
-
-	case $? in
-        0)
-            showInfo "Installation complete. Rebooting..."
-            clear
-            echo ""
-            echo "Installation complete. Rebooting..."
-            echo ""
-            sudo reboot now > /dev/null 2>&1
-	        ;;
-	    1) 
-	        showInfo "Installation complete. Not rebooting."
-            quit
-	        ;;
-	    255) 
-	        showInfo "Installation complete. Not rebooting."
-	        quit
-	        ;;
-	esac
+    showInfo "Rebooting system..."
+	quit
 }
 
 function quit()
@@ -945,6 +924,13 @@ function installVDR()
     IS_INSTALLED=$(aptInstall dvb-apps )
     IS_INSTALLED=$(aptInstall vdr-plugin-femon)
     IS_INSTALLED=$(aptInstall vdr-plugin-wirbelscan)
+}
+
+function installSamba()
+{
+    showInfo "Installing SAMBA..."
+    IS_INSTALLED=$(aptInstall samba)
+
 }
 
 function installSamba()
