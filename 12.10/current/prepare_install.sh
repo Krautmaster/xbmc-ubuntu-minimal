@@ -924,7 +924,6 @@ function installVDR()
     IS_INSTALLED=$(aptInstall vdr)
     IS_INSTALLED=$(aptInstall vdr-plugin-vnsiserver)
     IS_INSTALLED=$(aptInstall vdr-plugin-femon)
-    IS_INSTALLED=$(aptInstall vdr-plugin-wirbelscan)
 }
 
 function installSamba()
