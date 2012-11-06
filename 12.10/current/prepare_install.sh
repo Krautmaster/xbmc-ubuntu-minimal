@@ -919,19 +919,11 @@ control_c()
 function installVDR()
 {
     showInfo "Installing VDR with VNSI..."
-    sudo apt-get install -y vdr > /dev/null
-    sudo apt-get install -y vdr-plugin-vnsiserver > /dev/null
-    sudo apt-get install -y dvb-apps > /dev/null
-    sudo apt-get install -y vdr-plugin-femon > /dev/null
-    sudo apt-get install -y vdr-plugin-wirbelscan > /dev/null
+	IS_INSTALLED=$(aptInstall dvb-apps)
     IS_INSTALLED=$(aptInstall vdr)
-}
-
-function installSamba()
-{
-    showInfo "Installing SAMBA..."
-    IS_INSTALLED=$(aptInstall samba)
-
+    IS_INSTALLED=$(aptInstall vdr-plugin-vnsiserver)
+    IS_INSTALLED=$(aptInstall vdr-plugin-femon)
+    IS_INSTALLED=$(aptInstall vdr-plugin-wirbelscan)
 }
 
 function installSamba()
