@@ -469,12 +469,14 @@ function installVideoDriver()
         VIDEO_DRIVER="fglrx"
     elif [[ $GFX_CARD == INTEL ]]; then
         VIDEO_DRIVER="i965-va-driver"
+    elif [[ $GFX_CARD == VMWARE ]]; then
+        VIDEO_DRIVER="i965-va-driver"
     else
         cleanUp
         clear
         echo ""
         echo "$(tput setaf 1)$(tput bold)Installation aborted...$(tput sgr0)" 
-        echo "$(tput setaf 1)Only NVIDIA, ATI/AMD or INTEL videocards are supported. Please install a compatible videocard and run the script again.$(tput sgr0)"
+        echo "$(tput setaf 1)Only NVIDIA, ATI/AMD or INTEL/VMWARE videocards are supported. Please install a compatible videocard and run the script again.$(tput sgr0)"
         echo ""
         echo "$(tput setaf 1)You have a $GFX_CARD videocard.$(tput sgr0)"
         echo ""
