@@ -7,7 +7,7 @@
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
-SCRIPT_VERSION="2.6.0"
+SCRIPT_VERSION="2.7.0"
 VIDEO_DRIVER=""
 HOME_DIRECTORY="/home/$XBMC_USER/"
 TEMP_DIRECTORY=$HOME_DIRECTORY"temp/"
@@ -36,7 +36,7 @@ REMOTE_WAKEUP_RULES_FILE="/etc/udev/rules.d/90-enable-remote-wakeup.rules"
 AUTO_MOUNT_RULES_FILE="/etc/udev/rules.d/media-by-label-auto-mount.rules"
 SYSCTL_CONF_FILE="/etc/sysctl.conf"
 POWERMANAGEMENT_DIR="/var/lib/polkit-1/localauthority/50-local.d/"
-DOWNLOAD_URL="https://github.com/Bram77/xbmc-ubuntu-minimal/raw/master/12.10/download/"
+DOWNLOAD_URL="https://github.com/krautmaster/xbmc-ubuntu-minimal/raw/master/12.10/download/"
 XBMC_PPA="ppa:wsnipex/xbmc-xvba"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 OSCAM_PPA="ppa:oscam/ppa"
@@ -835,10 +835,12 @@ function selectAdditionalPackages()
         --checklist "Plese select to install:" 
         15 $DIALOG_WIDTH 6)
         
-    options=(1 "Lirc (IR remote support)" off
+    options=(1 "Lirc (IR remote support)" on
             2 "Hts tvheadend (live TV backend)" off
             3 "Oscam (live HDTV decryption tool)" off
-            4 "Automatic upgrades (every 4 hours)" off)
+            4 "Automatic upgrades (every 4 hours)" off
+            5 "VDR/VNSI (live TV backend)" on
+            6 "SAMBA (network file server service)" on)
             
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -856,6 +858,12 @@ function selectAdditionalPackages()
                 ;;
             4)
                 installAutomaticDistUpgrade
+                ;;
+            5)
+                installVDR
+                ;;
+            6)
+                installSamba
                 ;;
         esac
     done
@@ -927,6 +935,23 @@ control_c()
     cleanUp
     echo "Installation aborted..."
     quit
+}
+
+function installVDR()
+{
+    showInfo "Installing VDR with VNSI..."
+    IS_INSTALLED=$(aptInstall vdr)
+    IS_INSTALLED=$(aptInstall vdr-plugin-vnsiserver)
+    IS_INSTALLED=$(aptInstall dvb-apps )
+    IS_INSTALLED=$(aptInstall vdr-plugin-femon)
+    IS_INSTALLED=$(aptInstall vdr-plugin-wirbelscan)
+}
+
+function installSamba()
+{
+    showInfo "Installing SAMBA..."
+    IS_INSTALLED=$(aptInstall samba)
+
 }
 
 ## ------- END functions -------
