@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 #
 # @author   Bram van Oploo
 # @date     2012-10-06
@@ -875,6 +875,7 @@ function optimizeInstallation()
     sudo service apparmor stop > /dev/null &2>1
     sudo service apparmor teardown > /dev/null &2>1
     sudo apt-get -y remove apparmor > /dev/null &2>1
+    sudo chmod 777 -R $HOME_DIRECTORY  &2>1
     handleFileBackup "$SYSCTL_CONF_FILE" 1 0
     createFile "$SYSCTL_CONF_FILE" 1 0
     appendToFile "$SYSCTL_CONF_FILE" "dev.cdrom.lock=0"
