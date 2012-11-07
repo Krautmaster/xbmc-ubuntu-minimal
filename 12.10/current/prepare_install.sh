@@ -1,8 +1,8 @@
 ﻿#!/bin/bash
 #
-# @author   Bram van Oploo
-# @date     2012-10-06
-# @version  2.6.0
+# @author   Krautmaster based on Bram van Oploo
+# @date     2012-10-07
+# @version  2.7.0
 #
 
 XBMC_USER="xbmc"
@@ -44,7 +44,7 @@ OSCAM_PPA="ppa:oscam/ppa"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=70
-SCRIPT_TITLE="XBMC installation script v$SCRIPT_VERSION for Ubuntu 12.10 by Bram van Oploo :: bram@sudo-systems.com :: www.sudo-systems.com"
+SCRIPT_TITLE="XBMC installation script v$SCRIPT_VERSION for Ubuntu 12.10 by Krautmaster based on Bram van Oploo skript"
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
 
