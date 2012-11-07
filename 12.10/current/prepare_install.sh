@@ -780,7 +780,7 @@ function selectXbmcTweaks()
         case ${choice//\"/} in
             1)
                 setup "firefox"
-				setup "xbmc_config"
+                setup "xbmc_config"
                 ;;
             2)
                 enableDirtyRegionRendering
