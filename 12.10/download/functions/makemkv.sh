@@ -24,6 +24,8 @@ tar xfvz makemkv-oss-1.7.*.tar.gz
 
 cd makemkv-oss-1.7.*
 
+clear
+
 make -f makefile.linux
 
 sudo make -f makefile.linux install
