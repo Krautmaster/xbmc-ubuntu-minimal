@@ -21,7 +21,7 @@ cd vdr-plugin-dvbapi/
 make
 cp /usr/src/vdr/vdr-*/PLUGINS/lib/libvdr-dvbapi.so.* /usr/lib/vdr/plugins/
 
-# --> Kannalliste aktualisieren & Lirc Disable <--
+# --> get sat channels.conf <--
 
 /etc/init.d/vdr stop
 cd /var/lib/vdr

@@ -248,6 +248,7 @@ function installDependencies()
     echo ""
 
 	sudo apt-get -y install dialog software-properties-common > /dev/null 2>&1
+	IS_INSTALLED=$(linux-firmware-nonfree)
 }
 
 function fixLocaleBug()
@@ -402,6 +403,7 @@ function installXbmc()
 {
     showInfo "Installing XBMC..."
     IS_INSTALLED=$(aptInstall xbmc)
+	
 }
 
 function enableDirtyRegionRendering()
