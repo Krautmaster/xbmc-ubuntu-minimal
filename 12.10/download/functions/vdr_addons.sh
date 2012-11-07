@@ -20,3 +20,12 @@ git clone git://github.com/manio/vdr-plugin-dvbapi.git
 cd vdr-plugin-dvbapi/
 make
 cp /usr/src/vdr/vdr-*/PLUGINS/lib/libvdr-dvbapi.so.* /usr/lib/vdr/plugins/
+
+# --> Kannalliste aktualisieren & Lirc Disable <--
+
+/etc/init.d/vdr stop
+cd /var/lib/vdr
+rm channels.conf
+wget http://dl.dropbox.com/u/21136636/scripts/channels.conf
+chmod 777 -R /var/lib/vdr
+
