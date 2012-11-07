@@ -239,7 +239,7 @@ function move()
 	fi
 }
 
-------------------------------
+##------------------------------
 
 function installDependencies()
 {
@@ -846,7 +846,7 @@ function selectAdditionalPackages()
             3 "Oscam (live HDTV decryption tool)" off
             4 "Automatic upgrades (every 4 hours)" off
             5 "VDR/VNSI (live TV backend)" on
-            6 "SAMBA (network file server service)" on)
+            6 "SAMBA (network file server service)" on
             7 "Boblight Daemon (Ambilight)" off)
 			
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
