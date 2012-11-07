@@ -939,7 +939,9 @@ function installVDR()
 	sudo apt-get -y install vdr 
 	sudo apt-get -y install vdr-plugin-vnsiserver 
 	sudo apt-get -y install vdr-plugin-femon
-    
+        cd /etc/default
+        rm vdr
+        download $DOWNLOAD_URL"vdr"    
 	if [ "$?" == "0" ]; then
         showInfo "VDR successfully installed"
     else
