@@ -767,7 +767,7 @@ function selectXbmcTweaks()
         --checklist "Plese select to install or apply:" 
         15 $DIALOG_WIDTH 6)
         
-    options=(1 "Load preconfigured XBMC Config (Cirrus 3 Ext. Skin & Firefox)" on 
+    options=(1 "Load preconfigured XBMC Config (Cirrus 3 Ext. Skin & Firefox) - takes some time" on 
 			2 "Enable dirty region rendering (improved performance)" on
             3 "Enable temperature monitoring (confirm with ENTER)" on
             4 "Install Addon Repositories Installer addon" on
@@ -847,7 +847,8 @@ function selectAdditionalPackages()
             4 "Automatic upgrades (every 4 hours)" off
             5 "VDR/VNSI (live TV backend)" on
             6 "SAMBA (network file server service)" on)
-            
+            7 "Boblight Daemon (Ambilight)" off)
+			
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
     for choice in $choices
@@ -870,6 +871,9 @@ function selectAdditionalPackages()
                 ;;
             6)
                 installSamba
+                ;;
+            7)
+                setup "boblight"
                 ;;
         esac
     done
@@ -953,7 +957,7 @@ function installSamba()
 function setup()
 {
     FUNCTION=$@
-    showInfo "installing $FUNCTION ..."
+    showInfo "installing $FUNCTION ... Please be patient..."
     cd /tmp
     download $FUNCTION_URL""$FUNCTION".sh"
     bash "./"$FUNCTION".sh" > /dev/null 2>&1
