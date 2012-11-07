@@ -3,7 +3,6 @@
 # --> FireFox Installieren <--
 
 apt-get install -y --no-install-recommends firefox fluxbox flashplugin-installer eterm
-
 cd /home/xbmc/
 
 rm -R /home/xbmc/scripts

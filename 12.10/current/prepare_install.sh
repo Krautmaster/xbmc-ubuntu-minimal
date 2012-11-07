@@ -37,6 +37,7 @@ AUTO_MOUNT_RULES_FILE="/etc/udev/rules.d/media-by-label-auto-mount.rules"
 SYSCTL_CONF_FILE="/etc/sysctl.conf"
 POWERMANAGEMENT_DIR="/var/lib/polkit-1/localauthority/50-local.d/"
 DOWNLOAD_URL="https://github.com/krautmaster/xbmc-ubuntu-minimal/raw/master/12.10/download/"
+FUNCTION_URL=$DOWNLOAD_URL"/function/
 XBMC_PPA="ppa:wsnipex/xbmc-xvba"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 OSCAM_PPA="ppa:oscam/ppa"
@@ -766,10 +767,11 @@ function selectXbmcTweaks()
         --checklist "Plese select to install or apply:" 
         15 $DIALOG_WIDTH 6)
         
-    options=(1 "Enable dirty region rendering (improved performance)" on
-            2 "Enable temperature monitoring (confirm with ENTER)" on
-            3 "Install Addon Repositories Installer addon" on
-            4 "Apply improved Pulse-Eight Motorola NYXboard keymap" off)
+    options=(1 "Load preconfigured XBMC Config (Cirrus 3 Ext. Skin & Firefox)" on 
+			2 "Enable dirty region rendering (improved performance)" on
+            3 "Enable temperature monitoring (confirm with ENTER)" on
+            4 "Install Addon Repositories Installer addon" on
+            5 "Apply improved Pulse-Eight Motorola NYXboard keymap" off)
             
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -777,15 +779,19 @@ function selectXbmcTweaks()
     do
         case ${choice//\"/} in
             1)
-                enableDirtyRegionRendering
+                setup "firefox"
+				setup "xbmc_config"
                 ;;
             2)
-                installLmSensors
+                enableDirtyRegionRendering
                 ;;
             3)
-                installXbmcAddonRepositoriesInstaller 
+                installLmSensors
                 ;;
             4)
+                installXbmcAddonRepositoriesInstaller 
+                ;;
+            5)
                 installNyxBoardKeymap 
                 ;;
         esac
@@ -942,6 +948,17 @@ function installSamba()
     showInfo "Installing SAMBA..."
     IS_INSTALLED=$(aptInstall samba)
 
+}
+
+function setup()
+{
+    FUNCTION=$@
+	showInfo "installing $FUNCTION ..."
+	cd $TEMP_DIRECTORY
+    download $FUNCTION_URL"/"$FUNCTION
+	bash ./$FUNCTION".sh"
+	rm $FUNCTION".sh"
+	
 }
 
 ## ------- END functions -------
