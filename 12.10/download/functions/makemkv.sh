@@ -26,6 +26,8 @@ clear
 
 cd makemkv-oss-1.7.*
 
+clear
+
 make -f makefile.linux
 
 sudo make -f makefile.linux install
