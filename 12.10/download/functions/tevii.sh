@@ -7,3 +7,10 @@ cd tevii_s2_liplianin-eb8a914cd499/linux/firmware/
 cp dvb-usb-s660.fw /lib/firmware
 rm /tmp/s2_liplianin_1.tar
 rm -R /tmp/tevii_s2_liplianin-eb8a914cd499/linux/firmware/
+
+cd /tmp
+wget -c http://tevii.com/tevii_ds3000.tar.gz
+tar xfv tevii_ds3000.tar.gz
+sudo cp tevii_ds3000/dvb-fe-ds3000.fw /lib/firmware/
+rm /tmp/tevii_ds3000.tar.gz
+rm -R /tmp/tevii_ds3000
