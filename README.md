@@ -11,6 +11,6 @@ i386: http://archive.ubuntu.com/ubuntu/dists/quantal/main/installer-i386/current
 
 ```
 cd ~ 
-wget https://github.com/Bram77/xbmc-ubuntu-minimal/raw/master/12.10/prepare_install_2_5.sh
-bash ./prepare_install_2_5.sh
+wget https://github.com/krautmaster/xbmc-ubuntu-minimal/raw/master/12.10/current/prepare_install.sh
+bash ./prepare_install.sh
 ```
