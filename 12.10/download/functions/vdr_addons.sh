@@ -4,7 +4,6 @@
 
 apt-get install -y  vdr-plugin-vnsiserver  
 apt-get install -y vdr-plugin-femon 
-apt-get install -y vdr-plugin-wirbelscan 
 apt-get build-dep -y vdr-dev
 apt-get install -y fakeroot
 rm -R /usr/src/vdr

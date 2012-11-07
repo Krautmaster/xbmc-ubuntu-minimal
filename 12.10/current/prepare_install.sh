@@ -1013,7 +1013,12 @@ function installMakemkv()
     cd ../makemkv-bin-$MAKEMKV_VERSION
     make -f makefile.linux
     sudo make -f makefile.linux install
-
+    if [ "$?" == "0" ]; then
+      showInfo "MakeMKV successfully installed"
+    else
+      showError "MakeMKV could not be installed (error code: $?)"
+    fi
+   
 }
 
 
