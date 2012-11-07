@@ -8,6 +8,7 @@
 XBMC_USER="xbmc"
 THIS_FILE=$0
 SCRIPT_VERSION="2.7.0"
+MAKEMKV_VERSION="1.7.9"
 VIDEO_DRIVER=""
 HOME_DIRECTORY="/home/$XBMC_USER/"
 TEMP_DIRECTORY=$HOME_DIRECTORY"temp/"
@@ -43,7 +44,7 @@ HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 OSCAM_PPA="ppa:oscam/ppa"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
-DIALOG_WIDTH=70
+DIALOG_WIDTH=90
 SCRIPT_TITLE="XBMC installation script v$SCRIPT_VERSION for Ubuntu 12.10 by Krautmaster based on Bram van Oploo skript"
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
@@ -839,7 +840,7 @@ function selectAdditionalPackages()
     cmd=(dialog --title "Other optional packages and features" 
         --backtitle "$SCRIPT_TITLE" 
         --checklist "Plese select to install:" 
-        15 $DIALOG_WIDTH 6)
+        15 $DIALOG_WIDTH 10)
         
     options=(1 "Lirc (IR remote support)" on
             2 "Hts tvheadend (live TV backend)" off
@@ -847,7 +848,9 @@ function selectAdditionalPackages()
             4 "Automatic upgrades (every 4 hours)" off
             5 "VDR/VNSI (live TV backend)" on
             6 "SAMBA (network file server service)" on
-            7 "Boblight Daemon (Ambilight)" off)
+            7 "Boblight Daemon (Ambilight)" on
+			8 "MakeMKV (BD decode support)" on
+			9 "Marashino (advanced webgui for xbmc)" on)
 			
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -873,7 +876,13 @@ function selectAdditionalPackages()
                 installSamba
                 ;;
             7)
-                setup "boblight"
+                installBoblight
+                ;;
+            8)
+                installMakemkv
+                ;;
+            9)
+                setup "maraschino"
                 ;;
         esac
     done
@@ -937,8 +946,8 @@ function installVDR()
     echo ""
 	sudo apt-get -y install dvb-apps 
 	sudo apt-get -y install vdr 
-	sudo apt-get -y install vdr-plugin-vnsiserver 
-	sudo apt-get -y install vdr-plugin-femon
+	showInfo "Installing VDR Addons..."
+    setup "vdr_addons"
         cd /etc/default
         rm vdr
         download $DOWNLOAD_URL"vdr"    
@@ -971,6 +980,42 @@ function setup()
     fi
     rm $FUNCTION".sh"
 }
+
+function installBoblight()
+{
+    showInfo "Installing Boblight for "
+    if [[ $GFX_CARD == AMD ]]; then
+        showInfo "Installing Boblight Daemon for AMD - Use XBMC Addon for boblight"
+        setup "boblight"
+    else
+        showInfo "Installing Boblight Daemon..."
+        setup "boblight"
+    fi
+}
+
+function installMakemkv()
+{
+    showInfo "Installing MakeMKV..."
+    sudo apt-get -y install build-essential libc6-dev libssl-dev libexpat1-dev libgl1-mesa-dev libqt4-dev > /dev/null 2>&1
+	showInfo "Installing MakeMKV... press 'q' on next dialoge and type 'yes' to complete!!"
+    cd /usr/src > /dev/null 2>&1
+    rm -R makemkv > /dev/null 2>&1
+    mkdir makemkv > /dev/null 2>&1
+    cd makemkv > /dev/null 2>&1
+    wget http://www.makemkv.com/download/makemkv-bin-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
+    wget http://www.makemkv.com/download/makemkv-oss-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
+    tar xfvz makemkv-bin-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
+    tar xfvz makemkv-oss-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
+    cd makemkv-oss-$MAKEMKV_VERSION > /dev/null 2>&1
+    make -f makefile.linux > /dev/null 2>&1
+    clear
+    sudo make -f makefile.linux install 
+    cd ../makemkv-bin-$MAKEMKV_VERSION
+    make -f makefile.linux
+    sudo make -f makefile.linux install
+
+}
+
 
 ## ------- END functions -------
 

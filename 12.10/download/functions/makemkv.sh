@@ -22,6 +22,8 @@ tar xfvz makemkv-bin-1.7.*.tar.gz
 
 tar xfvz makemkv-oss-1.7.*.tar.gz
 
+clear
+
 cd makemkv-oss-1.7.*
 
 make -f makefile.linux
