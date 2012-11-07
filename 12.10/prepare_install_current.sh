@@ -956,7 +956,6 @@ function installVDR()
         showError "VDR could not be installed (error code: $?)"
     fi
 	
-	install_DVB_drivers
 }
 
 function installSamba()
@@ -1076,6 +1075,7 @@ installPowerManagement
 installAudio
 selectXbmcTweaks
 selectAdditionalPackages
+install_DVB_drivers
 allowRemoteWakeup
 optimizeInstallation
 cleanUp
