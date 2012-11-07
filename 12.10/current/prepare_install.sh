@@ -37,7 +37,7 @@ AUTO_MOUNT_RULES_FILE="/etc/udev/rules.d/media-by-label-auto-mount.rules"
 SYSCTL_CONF_FILE="/etc/sysctl.conf"
 POWERMANAGEMENT_DIR="/var/lib/polkit-1/localauthority/50-local.d/"
 DOWNLOAD_URL="https://github.com/krautmaster/xbmc-ubuntu-minimal/raw/master/12.10/download/"
-FUNCTION_URL=$DOWNLOAD_URL"/function/"
+FUNCTION_URL=$DOWNLOAD_URL"/functions/"
 XBMC_PPA="ppa:wsnipex/xbmc-xvba"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 OSCAM_PPA="ppa:oscam/ppa"
@@ -953,12 +953,17 @@ function installSamba()
 function setup()
 {
     FUNCTION=$@
-	showInfo "installing $FUNCTION ..."
-	cd $TEMP_DIRECTORY
-    download $FUNCTION_URL"/"$FUNCTION
-	bash ./$FUNCTION".sh"
-	rm $FUNCTION".sh"
+    showInfo "installing $FUNCTION ..."
+    cd $TEMP_DIRECTORY
+    download $FUNCTION_URL""$FUNCTION".sh"
+    bash "./"$FUNCTION".sh"
 	
+    if [ "$?" == "0" ]; then
+      showInfo "$FUNCTION successfully installed"
+    else
+      showError "$FUNCTION could not be installed (error code: $?)"
+    fi
+    rm $FUNCTION".sh"
 }
 
 ## ------- END functions -------
