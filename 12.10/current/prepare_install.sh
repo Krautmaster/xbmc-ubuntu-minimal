@@ -944,9 +944,8 @@ function installVDR()
     echo ""
     echo "------------------"
     echo ""
-	sudo apt-get -y install dvb-apps 
-	sudo apt-get -y install vdr 
-	showInfo "Installing VDR Addons..."
+    sudo apt-get -y install dvb-apps 
+    sudo apt-get -y install vdr 
     setup "vdr_addons"
         cd /etc/default
         rm vdr
