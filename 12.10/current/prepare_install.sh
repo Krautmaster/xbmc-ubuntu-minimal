@@ -919,11 +919,22 @@ control_c()
 
 function installVDR()
 {
-    showInfo "Installing VDR with VNSI..."
-	IS_INSTALLED=$(aptInstall dvb-apps)
-    IS_INSTALLED=$(aptInstall vdr)
-    IS_INSTALLED=$(aptInstall vdr-plugin-vnsiserver)
-    IS_INSTALLED=$(aptInstall vdr-plugin-femon)
+    clear
+    echo ""
+    echo "Installing VDR with VNSI-Server.."
+    echo ""
+    echo "------------------"
+    echo ""
+	sudo apt-get -y install dvb-apps 
+	sudo apt-get -y install vdr 
+	sudo apt-get -y install vdr-plugin-vnsiserver 
+	sudo apt-get -y install vdr-plugin-femon
+    
+	if [ "$?" == "0" ]; then
+        showInfo "VDR successfully installed"
+    else
+        showError "VDR could not be installed (error code: $?)"
+    fi
 }
 
 function installSamba()
