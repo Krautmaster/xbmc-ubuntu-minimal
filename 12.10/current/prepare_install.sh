@@ -844,13 +844,13 @@ function selectAdditionalPackages()
         
     options=(1 "Lirc (IR remote support)" on
             2 "Hts tvheadend (live TV backend)" off
-            3 "Oscam (live HDTV decryption tool)" off
+            3 "Oscam (live HDTV decryption tool)" on
             4 "Automatic upgrades (every 4 hours)" off
             5 "VDR/VNSI (live TV backend)" on
             6 "SAMBA (network file server service)" on
-            7 "Boblight Daemon (Ambilight)" on
-			8 "MakeMKV (BD decode support)" on
-			9 "Marashino (advanced webgui for xbmc)" on)
+            7 "Boblight Daemon (Ambilight)" off
+			8 "MakeMKV (BD decode support)" off
+			9 "Marashino (advanced webgui for xbmc)" off)
 			
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
