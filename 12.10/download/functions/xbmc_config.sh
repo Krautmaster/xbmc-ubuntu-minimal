@@ -8,6 +8,8 @@ sudo apt-get -y install unzip
 
 rm xbmc.zip
 
+showInfo "$xbmc config file download... (may take some time)"
+
 wget https://dl.dropbox.com/u/21136636/configs/xbmc.zip
 
 rm -R .xbmc

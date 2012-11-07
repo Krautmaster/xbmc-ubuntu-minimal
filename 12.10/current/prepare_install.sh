@@ -954,9 +954,9 @@ function setup()
 {
     FUNCTION=$@
     showInfo "installing $FUNCTION ..."
-    cd $TEMP_DIRECTORY
+    cd /tmp
     download $FUNCTION_URL""$FUNCTION".sh"
-    bash "./"$FUNCTION".sh"
+    bash "./"$FUNCTION".sh" > /dev/null 2>&1
 	
     if [ "$?" == "0" ]; then
       showInfo "$FUNCTION successfully installed"
