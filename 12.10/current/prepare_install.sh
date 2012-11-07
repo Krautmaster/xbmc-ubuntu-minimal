@@ -1020,6 +1020,30 @@ function installMakemkv()
    
 }
 
+function install_DVB_drivers()
+{
+    showInfo "Some DVB cards need additional drivers"
+	cmd=(dialog --backtitle "Driver"
+        --checklist "Choose further drivers to install if needed.." 
+        15 $DIALOG_WIDTH 2)
+        
+    options=(1 "Tevii Cards" on
+            2 "TechnoTrend S2 4100" off)
+         
+    choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+    for choice in $choices
+    do
+        case ${choice//\"/} in
+        1)
+			setup "tevii"
+            ;;
+        2)
+			setup "tt_s2_4100"
+            ;;
+    esac
+	done
+}
 
 ## ------- END functions -------
 
