@@ -10,6 +10,8 @@ wget http://www.makemkv.com/download/makemkv-oss-$MAKEMKV_VERSION.tar.gz > /dev/
 tar xfvz makemkv-bin-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
 tar xfvz makemkv-oss-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
 cd makemkv-oss-$MAKEMKV_VERSION > /dev/null 2>&1
+echo '#!/bin/bash' > src/ask_eula.sh
+echo 'exit 0' >> src/ask_eula.sh
 make -f makefile.linux > /dev/null 2>&1
 clear
 sudo make -f makefile.linux install 
