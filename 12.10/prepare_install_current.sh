@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+ï»¿#!/bin/bash
 #
 # @author   Krautmaster based on Bram van Oploo
 # @date     2012-10-07
