@@ -1,4 +1,17 @@
 ﻿#!/bin/bash
+
+#######################################################################
+# Title      :    prepare_install
+# Author     :    Krautmaster based on Bram van Oploo
+# Date       :    2012-11-08
+# Version	 :	  2.7.0
+#######################################################################
+# Description
+#   -
+# Note:
+#   - 
+#######################################################################
+
 #
 # @author   Krautmaster based on Bram van Oploo
 # @date     2012-10-07

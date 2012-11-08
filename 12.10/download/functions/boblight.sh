@@ -1,6 +1,16 @@
 #!/bin/bash 
 
-# --> Boblight Installieren <--
+#######################################################################
+# Title      :    boblight
+# Author     :    Mathias Kraut, Uwe Stark
+# Date       :    2012-11-08
+# Version	 :	  1.0.0
+#######################################################################
+# Description
+#   compile and install boblight
+# Note:
+#   - 
+#######################################################################
 
 cd /usr/src
 
