@@ -288,6 +288,7 @@ function addUserToRequiredGroups()
 	sudo adduser $XBMC_USER users > /dev/null 2>&1
 	sudo adduser $XBMC_USER fuse > /dev/null 2>&1
 	sudo adduser $XBMC_USER cdrom > /dev/null 2>&1
+	sudo adduser $XBMC_USER dialout > /dev/null 2>&1
 	sudo adduser $XBMC_USER plugdev > /dev/null 2>&1
 	showInfo "XBMC user added to required groups"
 }
@@ -847,10 +848,9 @@ function selectAdditionalPackages()
             3 "Oscam (live HDTV decryption tool)" on
             4 "Automatic upgrades (every 4 hours)" off
             5 "VDR/VNSI (live TV backend)" on
-            6 "SAMBA (network file server service)" on
-            7 "Boblight Daemon (Ambilight)" off
-			8 "MakeMKV (BD decode support)" off
-			9 "Marashino (advanced webgui for xbmc)" off)
+            6 "Boblight Daemon (Ambilight)" off
+			7 "MakeMKV (BD decode support)" off
+			8 "Marashino (advanced webgui for xbmc)" off)
 			
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -873,15 +873,12 @@ function selectAdditionalPackages()
                 installVDR
                 ;;
             6)
-                installSamba
-                ;;
-            7)
                 installBoblight
                 ;;
-            8)
+            7)
                 setup "makemkv"
                 ;;
-            9)
+            8)
                 setup "maraschino"
                 ;;
         esac
@@ -1047,6 +1044,7 @@ selectScreenResolution
 reconfigureXServer
 installPowerManagement
 installAudio
+installSamba
 selectXbmcTweaks
 selectAdditionalPackages
 install_DVB_drivers

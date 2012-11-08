@@ -1,4 +1,16 @@
-#!/bin/bash 
+#!/bin/bash
+
+#######################################################################
+# Title      :    tevii firmware
+# Author     :    Mathias Kraut, Uwe Stark
+# Date       :    2012-11-08
+# Version	 :	  1.0.0
+#######################################################################
+# Description
+#   fetch and extract tevii tv card firmware
+# Note:
+#   - 
+#######################################################################
 
 cd /tmp
 wget https://dl.dropbox.com/u/21136636/configs/s2_liplianin_1.tar
