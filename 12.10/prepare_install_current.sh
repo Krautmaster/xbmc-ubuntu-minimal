@@ -879,7 +879,7 @@ function selectAdditionalPackages()
                 installBoblight
                 ;;
             8)
-                installMakemkv
+                setup "makemkv"
                 ;;
             9)
                 setup "maraschino"
@@ -991,34 +991,6 @@ function installBoblight()
         showInfo "Installing Boblight Daemon..."
         setup "boblight"
     fi
-}
-
-function installMakemkv()
-{
-    showInfo "Installing MakeMKV..."
-    sudo apt-get -y install build-essential libc6-dev libssl-dev libexpat1-dev libgl1-mesa-dev libqt4-dev > /dev/null 2>&1
-	showInfo "Installing MakeMKV... press 'q' on next dialoge and type 'yes' to complete!!"
-    cd /usr/src > /dev/null 2>&1
-    rm -R makemkv > /dev/null 2>&1
-    mkdir makemkv > /dev/null 2>&1
-    cd makemkv > /dev/null 2>&1
-    wget http://www.makemkv.com/download/makemkv-bin-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
-    wget http://www.makemkv.com/download/makemkv-oss-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
-    tar xfvz makemkv-bin-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
-    tar xfvz makemkv-oss-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
-    cd makemkv-oss-$MAKEMKV_VERSION > /dev/null 2>&1
-    make -f makefile.linux > /dev/null 2>&1
-    clear
-    sudo make -f makefile.linux install 
-    cd ../makemkv-bin-$MAKEMKV_VERSION
-    make -f makefile.linux
-    sudo make -f makefile.linux install
-    if [ "$?" == "0" ]; then
-      showInfo "MakeMKV successfully installed"
-    else
-      showError "MakeMKV could not be installed (error code: $?)"
-    fi
-   
 }
 
 function install_DVB_drivers()
