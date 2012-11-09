@@ -1,22 +1,9 @@
-﻿#!/bin/bash
-
-#######################################################################
-# Title      :    prepare_install
-# Author     :    Krautmaster based on Bram van Oploo
-# Date       :    2012-11-08
-# Version	 :	  2.7.0
-#######################################################################
-# Description
-#   -
-# Note:
-#   - 
-#######################################################################
-
+#!/bin/bash
 #
 # @author   Krautmaster based on Bram van Oploo
 # @date     2012-10-07
 # @version  2.7.0
-#
+
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
@@ -261,7 +248,6 @@ function installDependencies()
     echo ""
 
 	sudo apt-get -y install dialog software-properties-common > /dev/null 2>&1
-	IS_INSTALLED=$(linux-firmware-nonfree)
 }
 
 function fixLocaleBug()
@@ -302,6 +288,7 @@ function addUserToRequiredGroups()
 	sudo adduser $XBMC_USER users > /dev/null 2>&1
 	sudo adduser $XBMC_USER fuse > /dev/null 2>&1
 	sudo adduser $XBMC_USER cdrom > /dev/null 2>&1
+	sudo adduser $XBMC_USER dialout > /dev/null 2>&1
 	sudo adduser $XBMC_USER plugdev > /dev/null 2>&1
 	showInfo "XBMC user added to required groups"
 }
@@ -416,7 +403,6 @@ function installXbmc()
 {
     showInfo "Installing XBMC..."
     IS_INSTALLED=$(aptInstall xbmc)
-	
 }
 
 function enableDirtyRegionRendering()
@@ -862,10 +848,9 @@ function selectAdditionalPackages()
             3 "Oscam (live HDTV decryption tool)" on
             4 "Automatic upgrades (every 4 hours)" off
             5 "VDR/VNSI (live TV backend)" on
-            6 "SAMBA (network file server service)" on
-            7 "Boblight Daemon (Ambilight)" off
-			8 "MakeMKV (BD decode support)" off
-			9 "Marashino (advanced webgui for xbmc)" off)
+            6 "Boblight Daemon (Ambilight)" off
+			7 "MakeMKV (BD decode support)" off
+			8 "Marashino (advanced webgui for xbmc)" off)
 			
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -888,15 +873,12 @@ function selectAdditionalPackages()
                 installVDR
                 ;;
             6)
-                installSamba
-                ;;
-            7)
                 installBoblight
                 ;;
-            8)
-                installMakemkv
+            7)
+                setup "makemkv"
                 ;;
-            9)
+            8)
                 setup "maraschino"
                 ;;
         esac
@@ -970,6 +952,7 @@ function installVDR()
     else
         showError "VDR could not be installed (error code: $?)"
     fi
+	
 }
 
 function installSamba()
@@ -1007,34 +990,6 @@ function installBoblight()
     fi
 }
 
-function installMakemkv()
-{
-    showInfo "Installing MakeMKV..."
-    sudo apt-get -y install build-essential libc6-dev libssl-dev libexpat1-dev libgl1-mesa-dev libqt4-dev > /dev/null 2>&1
-	showInfo "Installing MakeMKV... press 'q' on next dialoge and type 'yes' to complete!!"
-    cd /usr/src > /dev/null 2>&1
-    rm -R makemkv > /dev/null 2>&1
-    mkdir makemkv > /dev/null 2>&1
-    cd makemkv > /dev/null 2>&1
-    wget http://www.makemkv.com/download/makemkv-bin-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
-    wget http://www.makemkv.com/download/makemkv-oss-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
-    tar xfvz makemkv-bin-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
-    tar xfvz makemkv-oss-$MAKEMKV_VERSION.tar.gz > /dev/null 2>&1
-    cd makemkv-oss-$MAKEMKV_VERSION > /dev/null 2>&1
-    make -f makefile.linux > /dev/null 2>&1
-    clear
-    sudo make -f makefile.linux install 
-    cd ../makemkv-bin-$MAKEMKV_VERSION
-    make -f makefile.linux
-    sudo make -f makefile.linux install
-    if [ "$?" == "0" ]; then
-      showInfo "MakeMKV successfully installed"
-    else
-      showError "MakeMKV could not be installed (error code: $?)"
-    fi
-   
-}
-
 function install_DVB_drivers()
 {
     showInfo "Some DVB cards need additional drivers"
@@ -1051,14 +1006,16 @@ function install_DVB_drivers()
     do
         case ${choice//\"/} in
         1)
-			setup "tevii"
+			clear
+            setup "tevii"
             ;;
         2)
-			setup "tt_s2_4100"
+			clear
+            setup "tt_s2_4100"
             ;;
     esac
 	done
-}
+	}
 
 ## ------- END functions -------
 
@@ -1087,8 +1044,10 @@ selectScreenResolution
 reconfigureXServer
 installPowerManagement
 installAudio
+installSamba
 selectXbmcTweaks
 selectAdditionalPackages
+install_DVB_drivers
 allowRemoteWakeup
 optimizeInstallation
 cleanUp
