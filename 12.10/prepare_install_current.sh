@@ -865,6 +865,7 @@ function selectAdditionalPackages()
                 ;;
             3)
                 installOscam 
+				setup "oscam_config"
                 ;;
             4)
                 installAutomaticDistUpgrade
