@@ -5,6 +5,7 @@
 apt-get install -y vdr-plugin-vnsiserver  
 apt-get install -y vdr-plugin-femon 
 apt-get build-dep -y vdr-dev
+apt-get install -y linux-firmware-nonfree
 apt-get install -y fakeroot git-core
 rm -R /usr/src/vdr
 mkdir /usr/src/vdr
