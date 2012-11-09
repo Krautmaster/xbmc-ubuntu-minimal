@@ -25,7 +25,7 @@ ldconfig
 adduser xbmc root
 mkdir /etc/boblight
 cd /etc/boblight
-wget https://dl.dropbox.com/u/21136636/Ambilight/Boblight/boblight.conf
+wget https://dl.dropbox.com/u/21136636/kraut/boblight.conf
 chmod 777 -R /etc/boblight
 # add samba share for boblight config
 echo "" >> /etc/samba/smb.conf
