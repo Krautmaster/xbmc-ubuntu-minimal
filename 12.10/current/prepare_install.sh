@@ -1036,6 +1036,7 @@ distUpgrade
 installVideoDriver
 installXinit
 installXbmc
+setup "autorun"
 selectXbmcStartupMethod
 installXbmcBootScreen
 selectScreenResolution

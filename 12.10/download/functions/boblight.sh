@@ -37,4 +37,4 @@ echo "browseable = yes" >> /etc/samba/smb.conf
 echo "create mode = 0777" >> /etc/samba/smb.conf
 echo "directory mode = 0777" >> /etc/samba/smb.conf
 # autostart boblight daemon
-echo "su - xbmc -c \"boblightd -c /etc/boblight/boblight.conf -f\"" >> /etc/rc.local
+echo "su - xbmc -c \"boblightd -c /etc/boblight/boblight.conf -f\"" >> /autorun/autorun.sh

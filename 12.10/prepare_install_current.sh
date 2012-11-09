@@ -3,7 +3,7 @@
 # @author   Krautmaster based on Bram van Oploo
 # @date     2012-10-07
 # @version  2.7.0
-#
+
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
@@ -876,7 +876,7 @@ function selectAdditionalPackages()
                 installBoblight
                 ;;
             7)
-                setup "makemkv"
+                setup "makemkv" $MAKEMKV_VERSION
                 ;;
             8)
                 setup "maraschino"
@@ -958,7 +958,6 @@ function installVDR()
 function installSamba()
 {
     setup "samba"
-
 }
 
 function setup()
@@ -1037,6 +1036,7 @@ distUpgrade
 installVideoDriver
 installXinit
 installXbmc
+setup "autorun"
 selectXbmcStartupMethod
 installXbmcBootScreen
 selectScreenResolution
