@@ -1,5 +1,6 @@
 #!/bin/bash 
 
+MAKEMKV_VERSION = $1
 sudo apt-get -y install build-essential libc6-dev libssl-dev libexpat1-dev libgl1-mesa-dev libqt4-dev 
 cd /usr/src 
 rm -R makemkv 

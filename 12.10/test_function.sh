@@ -1018,4 +1018,4 @@ function install_DVB_drivers()
 
 ## ------- END functions -------
 
-setup "makemkv"
+setup "makemkv" $MAKEMKV_VERSION
