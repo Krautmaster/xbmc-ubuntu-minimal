@@ -876,7 +876,7 @@ function selectAdditionalPackages()
                 installBoblight
                 ;;
             7)
-                setup "makemkv"
+                setup "makemkv" $MAKEMKV_VERSION
                 ;;
             8)
                 setup "maraschino"
