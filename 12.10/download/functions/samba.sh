@@ -23,3 +23,12 @@ echo "writeable = yes" >> /etc/samba/smb.conf
 echo "browseable = yes" >> /etc/samba/smb.conf
 echo "create mode = 0777" >> /etc/samba/smb.conf
 echo "directory mode = 0777" >> /etc/samba/smb.conf
+# add samba share for Home
+echo "" >> /etc/samba/smb.conf
+echo "[XBMC_Home]" >> /etc/samba/smb.conf
+echo "path = /home/xbmc"  >> /etc/samba/smb.conf
+echo "guest ok = yes" >> /etc/samba/smb.conf
+echo "writeable = yes" >> /etc/samba/smb.conf
+echo "browseable = yes" >> /etc/samba/smb.conf
+echo "create mode = 0777" >> /etc/samba/smb.conf
+echo "directory mode = 0777" >> /etc/samba/smb.conf
