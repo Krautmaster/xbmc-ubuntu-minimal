@@ -957,8 +957,7 @@ function installVDR()
 
 function installSamba()
 {
-    showInfo "Installing SAMBA..."
-    sudo apt-get -y install samba > /dev/null 2>&1
+    setup "samba"
 
 }
 
