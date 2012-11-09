@@ -957,9 +957,7 @@ function installVDR()
 
 function installSamba()
 {
-    showInfo "Installing SAMBA..."
-    IS_INSTALLED=$(aptInstall samba)
-
+    setup "samba"
 }
 
 function setup()
