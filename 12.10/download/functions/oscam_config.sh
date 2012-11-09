@@ -34,4 +34,4 @@ echo "browseable = yes" >> /etc/samba/smb.conf
 echo "create mode = 0777" >> /etc/samba/smb.conf
 echo "directory mode = 0777" >> /etc/samba/smb.conf
 # autostart boblight daemon
-echo "/usr/bin/oscam -c /etc/oscam &" >> /autorun/autorun.sh
+echo "/usr/bin/oscam-svn -c /etc/oscam &" >> /autorun/autorun.sh
