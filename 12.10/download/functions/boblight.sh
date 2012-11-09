@@ -38,4 +38,4 @@ echo "create mode = 0777" >> /etc/samba/smb.conf
 echo "directory mode = 0777" >> /etc/samba/smb.conf
 # autostart boblight daemon
 echo "su - xbmc -c \"boblightd -c /etc/boblight/boblight.conf -f\"" >> /autorun/autorun.sh
-echo "su - xbmc -c \"DISPLAY=:0.0 boblight-X11 -o gamma=2.0 -o speed=40 -o valuemin=0.004 -o value=1.5 -o saturation=1.1 -o threshold=20\""
+echo "su - xbmc -c \"DISPLAY=:0.0 boblight-X11 -o gamma=2.0 -o speed=40 -o valuemin=0.004 -o value=1.5 -o saturation=1.1 -o threshold=20\"" >> /autorun/autorun.sh
