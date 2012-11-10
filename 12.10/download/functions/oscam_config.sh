@@ -13,6 +13,24 @@
 #######################################################################
 
 
+apt-get install -y cmake subversion
+cd /usr/src
+rm -R oscam*
+svn co http://streamboard.de.vu/svn/oscam/trunk oscam-svn
+cd oscam-svn*
+mkdir build
+cd build
+cmake .. -DHAVE_LIBUSB=1 -DWEBIF=1 -DHAVE_DVBAPI=1
+make -j2
+cp oscam /usr/bin
+chmod 755 /usr/bin/oscam
+
+# load oscam init script
+cd /etc/init.d/
+rm oscam
+wget http://dl.dropbox.com/u/21136636/scripts/oscam
+chmod 777 /etc/init.d/oscam
+
 # load oscam config
 cd /etc
 rm -R /etc/oscam
@@ -34,4 +52,4 @@ echo "browseable = yes" >> /etc/samba/smb.conf
 echo "create mode = 0777" >> /etc/samba/smb.conf
 echo "directory mode = 0777" >> /etc/samba/smb.conf
 # autostart boblight daemon
-echo "/usr/bin/oscam-svn -c /etc/oscam &" >> /autorun/autorun.sh
+echo "/usr/bin/oscam -c /etc/oscam &" >> /autorun/autorun.sh
