@@ -12,8 +12,9 @@
 #   - 
 #######################################################################
 
+echo $1
 DOWNLOAD_URL=$1
-apt-get install -y cmake subversion
+apt-get install -y cmake subversion build-essential
 cd /usr/src
 rm -R oscam*
 svn co http://streamboard.de.vu/svn/oscam/trunk oscam-svn
