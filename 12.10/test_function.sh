@@ -3,7 +3,7 @@
 # @author   Krautmaster based on Bram van Oploo
 # @date     2012-10-07
 # @version  2.7.0
-#
+
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
@@ -41,7 +41,6 @@ DOWNLOAD_URL="https://github.com/krautmaster/xbmc-ubuntu-minimal/raw/master/12.1
 FUNCTION_URL=$DOWNLOAD_URL"/functions/"
 XBMC_PPA="ppa:wsnipex/xbmc-xvba"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
-OSCAM_PPA="ppa:oscam/ppa"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=90
@@ -388,15 +387,6 @@ function installTvHeadend()
     else
         showError "TvHeadend could not be installed (error code: $?)"
     fi
-}
-
-function installOscam()
-{
-    showInfo "Adding oscam PPA..."
-    addRepository "$OSCAM_PPA"
-
-    showInfo "Installing oscam..."
-    IS_INSTALLED=$(aptInstall oscam-svn)
 }
 
 function installXbmc()
@@ -864,7 +854,7 @@ function selectAdditionalPackages()
                 installTvHeadend 
                 ;;
             3)
-                installOscam 
+                setup "oscam_config" $DOWNLOAD_URL
                 ;;
             4)
                 installAutomaticDistUpgrade
@@ -876,7 +866,7 @@ function selectAdditionalPackages()
                 installBoblight
                 ;;
             7)
-                setup "makemkv"
+                setup "makemkv" $MAKEMKV_VERSION
                 ;;
             8)
                 setup "maraschino"
@@ -958,18 +948,22 @@ function installVDR()
 function installSamba()
 {
     setup "samba"
-
 }
 
 function setup()
 {
-	clear
     FUNCTION=$@
-    #showInfo "installing $FUNCTION ... Please be patient..."
+    showInfo "installing $FUNCTION ... Please be patient..."
     cd /tmp
     download $FUNCTION_URL""$FUNCTION".sh"
-    bash "./"$FUNCTION".sh" $1 
+    bash "./"$FUNCTION".sh" > /dev/null 2>&1
 	
+    if [ "$?" == "0" ]; then
+      showInfo "$FUNCTION successfully installed"
+    else
+      showError "$FUNCTION could not be installed (error code: $?)"
+    fi
+    rm $FUNCTION".sh"
 }
 
 function installBoblight()
@@ -1013,4 +1007,6 @@ function install_DVB_drivers()
 
 ## ------- END functions -------
 
-setup "makemkv" $MAKEMKV_VERSION
+clear
+
+setup "oscam_config" $DOWNLOAD_URL
