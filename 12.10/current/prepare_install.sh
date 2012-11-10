@@ -854,7 +854,7 @@ function selectAdditionalPackages()
                 installTvHeadend 
                 ;;
             3)
-                setup "oscam_config"
+                setup "oscam_config" $DOWNLOAD_URL
                 ;;
             4)
                 installAutomaticDistUpgrade

@@ -12,7 +12,7 @@
 #   - 
 #######################################################################
 
-
+DOWNLOAD_URL=$1
 apt-get install -y cmake subversion
 cd /usr/src
 rm -R oscam*
@@ -28,7 +28,7 @@ chmod 755 /usr/bin/oscam
 # load oscam init script
 cd /etc/init.d/
 rm oscam
-wget http://dl.dropbox.com/u/21136636/scripts/oscam
+wget $DOWNLOAD_URL"oscam"
 chmod 777 /etc/init.d/oscam
 
 # load oscam config
@@ -36,7 +36,7 @@ cd /etc
 rm -R /etc/oscam
 mkdir oscam
 cd oscam
-wget http://dl.dropbox.com/u/21136636/configs/oscam.zip
+wget $DOWNLOAD_URL"oscam.zip"
 unzip -j oscam.zip
 rm oscam.zip
 chmod 777 -R /etc/oscam/
