@@ -477,6 +477,8 @@ function installVideoDriver()
     fi
     
     IS_INSTALLED=$(aptInstall $VIDEO_DRIVER)
+	
+	sudo nvidia-xconfig --color-space YCbCr444
 
     if [ "$IS_INSTALLED" == "1"]; then
         if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]; then
