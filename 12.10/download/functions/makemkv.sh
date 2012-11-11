@@ -1,5 +1,17 @@
 #!/bin/bash 
 
+#######################################################################
+# Title      :    makemkv
+# Author     :    Mathias Kraut, Uwe Stark
+# Date       :    2012-11-08
+# Version   :	  1.0.0
+#######################################################################
+# Description
+#   download and install makemkv
+# Note:
+#   - 
+#######################################################################
+
 MAKEMKV_VERSION=$1
 echo "$MAKEMKV_VERSION" 
 sudo apt-get -y install build-essential libc6-dev libssl-dev libexpat1-dev libgl1-mesa-dev libqt4-dev 
