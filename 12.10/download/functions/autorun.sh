@@ -15,7 +15,7 @@
 
 echo '#!/bin/bash' > /etc/rc.local
 echo '# autorun skript'
-echo 'bash ./autorun/autorun.sh' >> /etc/rc.local
+echo 'bash /autorun/autorun.sh' >> /etc/rc.local
 echo 'exit 0' >> /etc/rc.local
 
 rm -R /autorun
