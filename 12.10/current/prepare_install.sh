@@ -295,7 +295,7 @@ function addUserToRequiredGroups()
 function addXbmcPpa()
 {
     showInfo "Adding Wsnipex xbmc-xvba PPA..."
-	IS_ADDED=$(addRepository "$XBMC_PPA")
+    sudo add-apt-repository -y $XBMC_PPA > /dev/null 2>&1
 }
 
 function distUpgrade()
@@ -936,9 +936,13 @@ function installVDR()
     sudo apt-get -y install dvb-apps 
     sudo apt-get -y install vdr 
     setup "vdr_addons"
-        cd /etc/default
-        rm vdr
-        download $DOWNLOAD_URL"vdr"    
+    rm /etc/default/vdr
+    echo "ENABLED=1" >> /etc/default/vdr
+    echo "ENABLE_SHUTDOWN=1" >> /etc/default/vdr
+    echo "OPTIONS=\"-w 60 --lirc=/dev/null\"" >> /etc/default/vdr
+
+	
+	
 	if [ "$?" == "0" ]; then
         showInfo "VDR successfully installed"
     else

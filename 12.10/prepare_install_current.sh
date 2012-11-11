@@ -41,7 +41,6 @@ DOWNLOAD_URL="https://github.com/krautmaster/xbmc-ubuntu-minimal/raw/master/12.1
 FUNCTION_URL=$DOWNLOAD_URL"/functions/"
 XBMC_PPA="ppa:wsnipex/xbmc-xvba"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
-OSCAM_PPA="ppa:oscam/ppa"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=90
@@ -296,7 +295,7 @@ function addUserToRequiredGroups()
 function addXbmcPpa()
 {
     showInfo "Adding Wsnipex xbmc-xvba PPA..."
-	IS_ADDED=$(addRepository "$XBMC_PPA")
+    sudo add-apt-repository -y $XBMC_PPA > /dev/null 2>&1
 }
 
 function distUpgrade()
@@ -390,15 +389,6 @@ function installTvHeadend()
     fi
 }
 
-function installOscam()
-{
-    showInfo "Adding oscam PPA..."
-    addRepository "$OSCAM_PPA"
-
-    showInfo "Installing oscam..."
-    IS_INSTALLED=$(aptInstall oscam-svn)
-}
-
 function installXbmc()
 {
     showInfo "Installing XBMC..."
@@ -487,6 +477,8 @@ function installVideoDriver()
     fi
     
     IS_INSTALLED=$(aptInstall $VIDEO_DRIVER)
+	
+	sudo nvidia-xconfig --color-space YCbCr444
 
     if [ "$IS_INSTALLED" == "1"]; then
         if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]; then
@@ -864,8 +856,7 @@ function selectAdditionalPackages()
                 installTvHeadend 
                 ;;
             3)
-                installOscam 
-				setup "oscam_config"
+                setup "oscam" $DOWNLOAD_URL
                 ;;
             4)
                 installAutomaticDistUpgrade
@@ -945,9 +936,13 @@ function installVDR()
     sudo apt-get -y install dvb-apps 
     sudo apt-get -y install vdr 
     setup "vdr_addons"
-        cd /etc/default
-        rm vdr
-        download $DOWNLOAD_URL"vdr"    
+    rm /etc/default/vdr
+    echo "ENABLED=1" >> /etc/default/vdr
+    echo "ENABLE_SHUTDOWN=1" >> /etc/default/vdr
+    echo "OPTIONS=\"-w 60 --lirc=/dev/null\"" >> /etc/default/vdr
+
+	
+	
 	if [ "$?" == "0" ]; then
         showInfo "VDR successfully installed"
     else
@@ -963,11 +958,11 @@ function installSamba()
 
 function setup()
 {
-    FUNCTION=$@
+    FUNCTION=$1
     showInfo "installing $FUNCTION ... Please be patient..."
     cd /tmp
     download $FUNCTION_URL""$FUNCTION".sh"
-    bash "./"$FUNCTION".sh" > /dev/null 2>&1
+    bash "./"$FUNCTION".sh" $2 > /dev/null 2>&1
 	
     if [ "$?" == "0" ]; then
       showInfo "$FUNCTION successfully installed"
