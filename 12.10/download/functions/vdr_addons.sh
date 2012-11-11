@@ -1,5 +1,17 @@
 #!/bin/bash 
 
+#######################################################################
+# Title      :    vdr addon
+# Author     :    Mathias Kraut, Uwe Stark
+# Date       :    2012-11-08
+# Version   :	  1.0.0
+#######################################################################
+# Description
+#   install vnsiserver, download and compile dvbapi
+# Note:
+#   - 
+#######################################################################
+
 # --> VDR Setup  <--
 
 apt-get install -y vdr-plugin-vnsiserver  
