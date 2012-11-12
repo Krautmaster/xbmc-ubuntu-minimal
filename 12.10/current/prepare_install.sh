@@ -1032,7 +1032,6 @@ distUpgrade
 installVideoDriver
 installXinit
 installXbmc
-setup "autorun"
 selectXbmcStartupMethod
 installXbmcBootScreen
 selectScreenResolution
@@ -1040,6 +1039,7 @@ reconfigureXServer
 installPowerManagement
 installAudio
 installSamba
+setup "autorun"
 selectXbmcTweaks
 selectAdditionalPackages
 install_DVB_drivers
