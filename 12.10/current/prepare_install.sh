@@ -939,9 +939,19 @@ function installVDR()
     rm /etc/default/vdr
     echo "ENABLED=1" >> /etc/default/vdr
     echo "ENABLE_SHUTDOWN=1" >> /etc/default/vdr
-    echo "OPTIONS=\"-w 60 --lirc=/dev/null\"" >> /etc/default/vdr
+    echo "OPTIONS=\"-w 60 --lirc=/dev/null --video=/recordings\"" >> /etc/default/vdr
+    mkdir /recordings
+    chmod 777 /recordings
+    # add samba share for recordings
+    echo "" >> /etc/samba/smb.conf
+    echo "[recordings]" >> /etc/samba/smb.conf
+    echo "path = /recordings"  >> /etc/samba/smb.conf
+    echo "guest ok = yes" >> /etc/samba/smb.conf
+    echo "writeable = yes" >> /etc/samba/smb.conf
+    echo "browseable = yes" >> /etc/samba/smb.conf
+    echo "create mode = 0777" >> /etc/samba/smb.conf
+    echo "directory mode = 0777" >> /etc/samba/smb.conf
 
-	
 	
 	if [ "$?" == "0" ]; then
         showInfo "VDR successfully installed"
