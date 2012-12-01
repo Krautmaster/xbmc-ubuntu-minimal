@@ -761,7 +761,7 @@ function selectXbmcTweaks()
         --checklist "Plese select to install or apply:" 
         15 $DIALOG_WIDTH 6)
         
-    options=(1 "Load preconfigured XBMC Config (Cirrus 3 Ext. Skin & Firefox) - takes some time" on 
+    options=(1 "Load preconfigured XBMC Config (Cirrus 3 Ext. Skin & Firefox) - takes some time" off 
 			2 "Enable dirty region rendering (improved performance)" on
             3 "Enable temperature monitoring (confirm with ENTER)" on
             4 "Install Addon Repositories Installer addon" on
