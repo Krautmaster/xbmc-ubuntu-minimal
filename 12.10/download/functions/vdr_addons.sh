@@ -31,6 +31,7 @@ dpkg-buildpackage -rfakeroot -us -uc -b
 cd /usr/src/vdr/vdr-*/PLUGINS/src
 git clone git://github.com/manio/vdr-plugin-dvbapi.git
 cd vdr-plugin-dvbapi/
+git checkout staging
 make
 cp /usr/src/vdr/vdr-*/PLUGINS/lib/libvdr-dvbapi.so.* /usr/lib/vdr/plugins/
 
