@@ -987,7 +987,7 @@ function setup()
     showInfo "installing $FUNCTION ... Please be patient..."
     cd /tmp
     download $FUNCTION_URL""$FUNCTION".sh"
-    bash "./"$FUNCTION".sh" $2 # > /dev/null 2>&1
+    bash "./"$FUNCTION".sh" $2  > /dev/null 2>&1
 	
     if [ "$?" == "0" ]; then
       showInfo "$FUNCTION successfully installed"
