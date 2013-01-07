@@ -18,7 +18,6 @@ echo '# autorun skript'
 echo 'bash /autorun/autorun.sh' >> /etc/rc.local
 echo 'exit 0' >> /etc/rc.local
 
-rm -R /autorun
 mkdir /autorun
 
 echo '#!/bin/bash' > /autorun/autorun.sh
