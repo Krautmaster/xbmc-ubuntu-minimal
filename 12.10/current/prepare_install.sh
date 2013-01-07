@@ -2,13 +2,13 @@
 #
 # @author   Krautmaster based on Bram van Oploo
 # @date     2012-10-07
-# @version  2.7.0
+# @version  2.8.0
 
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
-SCRIPT_VERSION="2.7.0"
-MAKEMKV_VERSION="1.7.9"
+SCRIPT_VERSION="2.8.0"
+MAKEMKV_VERSION="1.7.10"
 VIDEO_DRIVER=""
 HOME_DIRECTORY="/home/$XBMC_USER/"
 TEMP_DIRECTORY=$HOME_DIRECTORY"temp/"
