@@ -463,7 +463,7 @@ function installVideoDriver()
     elif [[ $GFX_CARD == INTEL ]]; then
         VIDEO_DRIVER="i965-va-driver"
         apt-get install -y i965-va-driver vainfo libmad0 gtk2-engines-pixbuf libva-dev
-    elif [[ $GFX_CARD == VMWARE || [[ $GFX_CARD == INNOTEK ]] ]]; then
+    elif [[ $GFX_CARD == VMWARE ]] || [[ $GFX_CARD == INNOTEK ]] ]]; then
         VIDEO_DRIVER="open-vm-tools"
     else
         cleanUp
