@@ -957,6 +957,7 @@ function installVDR()
 clear
 
 # download TV Logos and backgrounds to home directory
+chmod 777 -R /home/xbmc
 showInfo "downloading TV Logos and background images to /home/xbmc..."
 cd /home/xbmc > /dev/null 2>&1
 wget https://dl.dropbox.com/u/21136636/configs/stuff.zip > /dev/null 2>&1
