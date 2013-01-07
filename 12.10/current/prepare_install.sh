@@ -983,7 +983,7 @@ function installSamba()
 function setup()
 {
     FUNCTION=$1
-    showInfo "installing $FUNCTION ... Please be patient..."
+    showInfo "installing $FUNCTION ... Please be patient... (press a key if screen turns black)"
     cd /tmp
     download $FUNCTION_URL""$FUNCTION".sh"
     bash "./"$FUNCTION".sh" $2  > /dev/null 2>&1
