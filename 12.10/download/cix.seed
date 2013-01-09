@@ -16,8 +16,8 @@ locales locales/default_environment_locale select en_US.UTF-8
 locales locales/locales_to_be_generated multiselect de_DE.UTF-8 UTF-8, en_US.UTF-8 UTF-8
 
 # Network configuration
-d-i netcfg/choose_interface select auto
-d-i netcfg/get_hostname string htpc
+#d-i netcfg/choose_interface select auto
+#d-i netcfg/get_hostname string htpc
 
 # Clock and time zone setup
 d-i clock-setup/ntp boolean true
@@ -28,15 +28,15 @@ popularity-contest popularity-contest/participate boolean false
 
 # partitionating
 #d-i partman-auto/disk string /dev/sda
-d-i partman-auto/method string regular
-d-i partman-lvm/device_remove_lvm boolean true
-d-i partman-md/device_remove_md boolean true
-d-i partman-auto/choose_recipe select atomic
-d-i partman-partitioning/confirm_write_new_label boolean true
-d-i partman/choose_partition select finish
-d-i partman/confirm boolean true
-d-i partman/confirm_nooverwrite boolean true
-d-i partman-lvm/confirm boolean true
+#d-i partman-auto/method string regular
+#d-i partman-lvm/device_remove_lvm boolean true
+#d-i partman-md/device_remove_md boolean true
+#d-i partman-auto/choose_recipe select atomic
+#d-i partman-partitioning/confirm_write_new_label boolean true
+#d-i partman/choose_partition select finish
+#d-i partman/confirm boolean true
+#d-i partman/confirm_nooverwrite boolean true
+#d-i partman-lvm/confirm boolean true
 
 # Mirror settings
 d-i mirror/country string manual
