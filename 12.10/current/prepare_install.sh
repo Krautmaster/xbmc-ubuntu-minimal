@@ -960,11 +960,12 @@ clear
 chmod 777 -R /home/xbmc
 showInfo "downloading TV Logos and background images to /home/xbmc..."
 cd /home/xbmc > /dev/null 2>&1
-wget https://dl.dropbox.com/u/21136636/configs/stuff.zip > /dev/null 2>&1
-unzip stuff.zip > /dev/null 2>&1
+rm /home/xbmc/stuff.7z > /dev/null 2>&1
+wget https://dl.dropbox.com/u/21136636/configs/stuff.7z > /dev/null 2>&1
+p7zip -d xbmc.7z > /dev/null 2>&1
 mv /home/xbmc/stuff/* /home/xbmc > /dev/null 2>&1
 rm -R /home/xbmc/stuff > /dev/null 2>&1
-rm /home/xbmc/stuff.zip > /dev/null 2>&1
+rm /home/xbmc/stuff.7z > /dev/null 2>&1
 chmod 777 -R /home/xbmc > /dev/null 2>&1
 
 
