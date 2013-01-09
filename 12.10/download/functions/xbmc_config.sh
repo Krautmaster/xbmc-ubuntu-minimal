@@ -13,12 +13,12 @@
 #######################################################################
 
 cd /home/xbmc
-sudo apt-get -y install unzip
-rm xbmc.zip
+sudo apt-get -y install p7zip
+rm xbmc.7z
 showInfo "$xbmc config file download... (may take some time)"
-wget https://dl.dropbox.com/u/21136636/configs/xbmc.zip
+wget https://dl.dropbox.com/u/21136636/configs/xbmc.7z
 rm -R .xbmc
-unzip xbmc.zip
+p7zip -d xbmc.7z
 chmod 777 -R /home/xbmc/.xbmc
-rm xbmc.zip
+rm xbmc.7z
 chmod -R 777 .xbmc
