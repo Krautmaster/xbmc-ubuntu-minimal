@@ -246,7 +246,7 @@ function installDependencies()
     echo "-- Installing installation dependencies..."
     echo ""
 
-	sudo apt-get -y install dialog software-properties-common > /dev/null 2>&1
+	sudo apt-get -y install dialog software-properties-common p7zip > /dev/null 2>&1
 }
 
 function fixLocaleBug()
