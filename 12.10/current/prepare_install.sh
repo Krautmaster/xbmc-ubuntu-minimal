@@ -247,6 +247,7 @@ function installDependencies()
     echo ""
 
 	sudo apt-get -y install dialog software-properties-common p7zip > /dev/null 2>&1
+sudo apt-get -y install python-software-properties > /dev/null 2>&1
 }
 
 function fixLocaleBug()
