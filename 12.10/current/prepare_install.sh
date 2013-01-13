@@ -394,7 +394,7 @@ function installXbmc()
 {
     showInfo "Installing XBMC..."
     IS_INSTALLED=$(aptInstall xbmc)
-    IS_INSTALLED=$(aptInstall xbmc-pvr-addons)
+    IS_INSTALLED=$(aptInstall xbmc-pvr-*)
 }
 
 function enableDirtyRegionRendering()
