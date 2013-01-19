@@ -37,8 +37,8 @@ REMOTE_WAKEUP_RULES_FILE="/etc/udev/rules.d/90-enable-remote-wakeup.rules"
 AUTO_MOUNT_RULES_FILE="/etc/udev/rules.d/media-by-label-auto-mount.rules"
 SYSCTL_CONF_FILE="/etc/sysctl.conf"
 POWERMANAGEMENT_DIR="/var/lib/polkit-1/localauthority/50-local.d/"
-DOWNLOAD_URL="https://github.com/krautmaster/xbmc-ubuntu-minimal/raw/master/12.10/download/"
-FUNCTION_URL=$DOWNLOAD_URL"/functions/"
+DOWNLOAD_URL="ftp://night.dyndns.org/htpc/scripts/downloads/"
+FUNCTION_URL="ftp://night.dyndns.org/htpc/scripts/functions/"
 XBMC_PPA="ppa:wsnipex/xbmc-xvba"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 
@@ -246,8 +246,8 @@ function installDependencies()
     echo "-- Installing installation dependencies..."
     echo ""
 
-	sudo apt-get -y install dialog software-properties-common p7zip > /dev/null 2>&1
-sudo apt-get -y install python-software-properties > /dev/null 2>&1
+	sudo apt-get -y install dialog software-properties-common p7zip avahi-daemon > /dev/null 2>&1
+	sudo apt-get -y install python-software-properties > /dev/null 2>&1
 }
 
 function fixLocaleBug()
@@ -460,8 +460,23 @@ function installVideoDriver()
     
     if [[ $GFX_CARD == NVIDIA ]]; then
         VIDEO_DRIVER="nvidia-current"
+        #sudo apt-get install -y nvidia-current
     elif [[ $GFX_CARD == ATI ]] || [[ $GFX_CARD == AMD ]] || [[ $GFX_CARD == ADVANCED ]]; then
+    CARD=$(lspci |grep VGA |grep -E '[[:digit:]]{4}' -o)
+        if [[ $CARD > 5000 ]]; then
         VIDEO_DRIVER="fglrx"
+        showInfo "Installing AMD >HD5000 video drivers (may take a while)..."
+        elif [[ $CARD < 5000 ]]; then
+        VIDEO_DRIVER="fglrx-legacy"
+        sudo add-apt-repository -y ppa:makson96/fglrx
+        sudo apt-get update
+        sudo apt-get upgrade -y
+        sudo apt-get install -y fglrx-legacy
+        showInfo "Installing AMD Legacy video drivers (may take a while)..."
+        else
+        showInfo "Installing AMD shit failed"
+        exit
+        fi
     elif [[ $GFX_CARD == INTEL ]]; then
         VIDEO_DRIVER="i965-va-driver"
         apt-get install -y i965-va-driver vainfo libmad0 gtk2-engines-pixbuf libva-dev > /dev/null 2>&1
@@ -483,9 +498,7 @@ function installVideoDriver()
     IS_INSTALLED=$(aptInstall $VIDEO_DRIVER)
 	
 	sudo nvidia-xconfig --color-space YCbCr444
-
-    if [ "$IS_INSTALLED" == "1"]; then
-        if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]; then
+    if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]  || [ $GFX_CARD == ADVANCED ]; then
             configureAtiDriver
 
             dialog --title "Disable underscan" \
@@ -507,7 +520,6 @@ function installVideoDriver()
         fi
         
         showInfo "$GFX_CARD video drivers successfully installed and configured"
-    fi
 }
 
 function installAutomaticDistUpgrade()
@@ -653,7 +665,14 @@ function installXbmcBootScreen()
     sudo apt-get install -y plymouth-label v86d > /dev/null
     createDirectory "$TEMP_DIRECTORY" 1 0
     download $DOWNLOAD_URL"plymouth-theme-xbmc-logo.deb"
-    
+	
+	OS=$(lsb_release -rs)
+	#while Intel is broken in 12.10
+	if [[ $GFX_CARD == INTEL ]] && [[ "$OS" == "12.10" ]]; then
+        sed -i s/'GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash\"/\GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash i915.i915_enable_rc6=0\"/' /etc/default/grub
+		update-grub
+	fi
+	
     if [ -e $TEMP_DIRECTORY"plymouth-theme-xbmc-logo.deb" ]; then
         sudo dpkg -i $TEMP_DIRECTORY"plymouth-theme-xbmc-logo.deb" > /dev/null 2>&1
         update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth /lib/plymouth/themes/xbmc-logo/xbmc-logo.plymouth 100 > /dev/null 2>&1
@@ -963,7 +982,7 @@ chmod 777 -R /home/xbmc
 showInfo "downloading TV Logos and background images to /home/xbmc..."
 cd /home/xbmc > /dev/null 2>&1
 rm /home/xbmc/stuff.7z > /dev/null 2>&1
-wget https://dl.dropbox.com/u/21136636/configs/stuff.7z > /dev/null 2>&1
+wget ftp://night.dyndns.org/htpc/files/logopack/stuff.7z > /dev/null 2>&1
 p7zip -d stuff.7z > /dev/null 2>&1
 mv /home/xbmc/stuff/* /home/xbmc > /dev/null 2>&1
 rm -R /home/xbmc/stuff > /dev/null 2>&1
@@ -1004,12 +1023,21 @@ function setup()
 function installBoblight()
 {
     showInfo "Installing Boblight for "
-    if [[ $GFX_CARD == AMD ]]; then
+    if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]  || [ $GFX_CARD == ADVANCED ]; then
         showInfo "Installing Boblight Daemon for AMD - Use XBMC Addon for boblight"
         setup "boblight"
+        # autostart boblight daemon
+        echo "su - xbmc -c \"boblightd -c /etc/boblight/boblight.conf -f\"" >> /autorun/autorun.sh
+        #x11 doenst work with AMD
+        #echo "su - xbmc -c \"DISPLAY=:0.0 boblight-X11 -o gamma=2.0 -o speed=40 -o valuemin=0.004 -o value=1.5 -o saturation=1.1 -o threshold=20\" &" >> /autorun/autorun.sh
+
     else
         showInfo "Installing Boblight Daemon..."
         setup "boblight"
+        # autostart boblight daemon
+        echo "su - xbmc -c \"boblightd -c /etc/boblight/boblight.conf -f\"" >> /autorun/autorun.sh
+        echo "su - xbmc -c \"DISPLAY=:0.0 boblight-X11 -o gamma=2.0 -o speed=40 -o valuemin=0.004 -o value=1.5 -o saturation=1.1 -o threshold=20\" &" >> /autorun/autorun.sh
+
     fi
 }
 
