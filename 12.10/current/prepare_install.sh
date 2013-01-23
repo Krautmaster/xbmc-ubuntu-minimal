@@ -1,13 +1,13 @@
 #!/bin/bash
 #
 # @author   Krautmaster based on Bram van Oploo
-# @date     2012-10-07
-# @version  2.8.0
+# @date     2012-01-22
+# @version  3.0.0
 
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
-SCRIPT_VERSION="2.8.0"
+SCRIPT_VERSION="3.0.0"
 MAKEMKV_VERSION="1.7.10"
 VIDEO_DRIVER=""
 HOME_DIRECTORY="/home/$XBMC_USER/"
@@ -44,7 +44,7 @@ HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=90
-SCRIPT_TITLE="XBMC installation script v$SCRIPT_VERSION for Ubuntu 12.10 by Krautmaster based on Bram van Oploo skript"
+SCRIPT_TITLE="XBMC installation script v$SCRIPT_VERSION for Ubuntu 12.04/12.10 by Krautmaster"
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
 
@@ -459,8 +459,9 @@ function installVideoDriver()
     showInfo "Installing $GFX_CARD video drivers (may take a while)..."
     
     if [[ $GFX_CARD == NVIDIA ]]; then
-        VIDEO_DRIVER="nvidia-current"
-        #sudo apt-get install -y nvidia-current
+        showInfo "Installing NVIDIA video drivers (may take a while)..."
+        sudo apt-get install -y nvidia-current > /dev/null 2>&1
+        sudo nvidia-xconfig --color-space YCbCr444
     elif [[ $GFX_CARD == ATI ]] || [[ $GFX_CARD == AMD ]] || [[ $GFX_CARD == ADVANCED ]]; then
     CARD=$(lspci |grep VGA |grep -E '[[:digit:]]{4}' -o)
         if [[ $CARD > 5000 ]]; then
@@ -468,10 +469,10 @@ function installVideoDriver()
         showInfo "Installing AMD >HD5000 video drivers (may take a while)..."
         elif [[ $CARD < 5000 ]]; then
         VIDEO_DRIVER="fglrx-legacy"
-        sudo add-apt-repository -y ppa:makson96/fglrx
-        sudo apt-get update
-        sudo apt-get upgrade -y
-        sudo apt-get install -y fglrx-legacy
+        sudo add-apt-repository -y ppa:makson96/fglrx  > /dev/null 2>&1
+        sudo apt-get update > /dev/null 2>&1
+        sudo apt-get upgrade -y > /dev/null 2>&1
+        sudo apt-get install -y fglrx-legacy > /dev/null 2>&1
         showInfo "Installing AMD Legacy video drivers (may take a while)..."
         else
         showInfo "Installing AMD shit failed"
@@ -497,8 +498,7 @@ function installVideoDriver()
     
     IS_INSTALLED=$(aptInstall $VIDEO_DRIVER)
 	
-	sudo nvidia-xconfig --color-space YCbCr444
-    if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]  || [ $GFX_CARD == ADVANCED ]; then
+    if  [[ $GFX_CARD == ATI ]] || [[ $GFX_CARD == AMD ]] || [[ $GFX_CARD == ADVANCED ]]; then
             configureAtiDriver
 
             dialog --title "Disable underscan" \
@@ -666,6 +666,7 @@ function installXbmcBootScreen()
     createDirectory "$TEMP_DIRECTORY" 1 0
     download $DOWNLOAD_URL"plymouth-theme-xbmc-logo.deb"
 	
+	
 	OS=$(lsb_release -rs)
 	#while Intel is broken in 12.10
 	if [[ $GFX_CARD == INTEL ]] && [[ "$OS" == "12.10" ]]; then
@@ -751,6 +752,30 @@ function reconfigureXServer()
     createFile "$XWRAPPER_FILE" 1 1
 	appendToFile "$XWRAPPER_FILE" "allowed_users=anybody"
 	showInfo "X-server successfully configured"
+}
+
+function installBetaDrivers()
+{
+    cmd=(dialog --backtitle "Beta Drivers"
+        --radiolist "do you want to install newest beta drivers (newest GPU drivers and Kernels)?" 
+        15 $DIALOG_WIDTH 3)
+        
+    options=(1 "no way" on
+            2 "sure, why not" off)
+         
+    choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+    case ${choice//\"/} in
+        1)
+            ;;
+        2)
+            showInfo "upgrating to ppa:xorg-edgers/ppa packages "
+            add-apt-repository -y ppa:xorg-edgers/ppa  > /dev/null &2>1
+            ;;
+        *)
+            installBetaDrivers
+            ;;
+    esac
 }
 
 function selectXbmcStartupMethod()
@@ -1022,8 +1047,7 @@ function setup()
 
 function installBoblight()
 {
-    showInfo "Installing Boblight for "
-    if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]  || [ $GFX_CARD == ADVANCED ]; then
+   if  [[ $GFX_CARD == ATI ]] || [[ $GFX_CARD == AMD ]] || [[ $GFX_CARD == ADVANCED ]]; then
         showInfo "Installing Boblight Daemon for AMD - Use XBMC Addon for boblight"
         setup "boblight"
         # autostart boblight daemon
@@ -1079,7 +1103,7 @@ installDependencies
 echo "Loading installer..."
 showDialog "Welcome to the XBMC minimal installation script. Some parts may take a while to install depending on your internet connection speed.\n\nPlease be patient..."
 trap control_c SIGINT
-
+installBetaDrivers
 fixLocaleBug
 fixUsbAutomount
 applyXbmcNiceLevelPermissions
