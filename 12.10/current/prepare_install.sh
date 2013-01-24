@@ -39,7 +39,7 @@ SYSCTL_CONF_FILE="/etc/sysctl.conf"
 POWERMANAGEMENT_DIR="/var/lib/polkit-1/localauthority/50-local.d/"
 DOWNLOAD_URL="ftp://night.dyndns.org/htpc/scripts/downloads/"
 FUNCTION_URL="ftp://night.dyndns.org/htpc/scripts/functions/"
-XBMC_PPA="ppa:wsnipex/xbmc-xvba"
+XBMC_PPA="ppa:wsnipex/xbmc-xvba-testing"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
